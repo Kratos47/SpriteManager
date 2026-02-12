@@ -37,7 +37,7 @@ export class ImageMan extends Manager {
     // intentionally empty (same as C#)
   }
 
-  static Add(imageName, textureName, x, y, width, height) {
+  static Add(imageName, textureName, x, y, width, height, sourceIndex = 0) {
     const pMan = ImageMan.privGetInstance();
     console.assert(pMan !== null);
 
@@ -47,7 +47,7 @@ export class ImageMan extends Manager {
     const pTexture = TextureMan.Find(textureName);
     console.assert(pTexture !== null);
 
-    pNode.Set(imageName, pTexture, x, y, width, height);
+    pNode.Set(imageName, pTexture,  x, y, width, height, sourceIndex,);
     return pNode;
   }
 

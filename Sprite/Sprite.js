@@ -133,7 +133,8 @@ export class Sprite extends DLink {
   // Internal swaps
   // ------------------------------------------------------------
   SwapColor(color) {
-    // this.poAzulSprite.SwapColor(color);
+    // 5. Apply to sprite
+        this.poSprite.setTint(color);
   }
 
   SwapTextureRect(rect) {

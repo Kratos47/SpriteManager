@@ -33,6 +33,13 @@ export default class Game extends Phaser.Scene {
         SpriteMan.Create(4, 2);
 
         this.redSpeed = 2.0;
+
+        this.AlienPosX = 0.0;
+        this.AlienPosY = 0.0;
+        this.AlienAngle = 0.0;
+
+        this.blue = 0.0;
+        this.red = 0.0;
     }
 
     preload() {
@@ -51,60 +58,18 @@ export default class Game extends Phaser.Scene {
         console.log("===== Manager Tests Begin =====");
 
 
+        ImageMan.Add(Image.Name.Alien_Crab, Texture.Name.Aliens, 118, 27, 95, 70);
 
-
-        let crabImage = this.textures.get(Texture.Name.Aliens);
-
-        crabImage.add('crab', 0, 118, 27, 95, 70);
-
-        this.add.sprite(200, 200, Texture.Name.Aliens, 'crab');
-
-
-        //   // --- angry birds ---
-
-        //         ImageMan.Add(Image.Name.RedBird, Texture.Name.Birds, 47, 41, 48, 46);
-        //         ImageMan.Add(Image.Name.YellowBird, Texture.Name.Birds, 124, 34, 60, 56);
-        //         ImageMan.Add(Image.Name.GreenBird, Texture.Name.Birds, 246, 135, 99, 72);
-        //         ImageMan.Add(Image.Name.WhiteBird, Texture.Name.Birds, 139, 131, 84, 97);
-
-        // // --- Pacman Ghosts ---
-
-        //         ImageMan.Add(Image.Name.RedGhost, Texture.Name.PacMan, 616, 148, 33, 33);
-        //         ImageMan.Add(Image.Name.PinkGhost, Texture.Name.PacMan, 663, 148, 33, 33);
-        //         ImageMan.Add(Image.Name.BlueGhost, Texture.Name.PacMan, 710, 148, 33, 33);
-        //         ImageMan.Add(Image.Name.OrangeGhost, Texture.Name.PacMan, 757, 148, 33, 33);
-
-        //     // --- Alines ---
-        //         ImageMan.Add(Image.Name.Alien_Crab, Texture.Name.Aliens, 26, 201, 95, 63);
-        //         ImageMan.Add(Image.Name.Alien_Octopus, Texture.Name.Aliens, 559, 64, 92, 64);
-        //         ImageMan.Add(Image.Name.Alien_Squid, Texture.Name.Aliens, 464, 64, 63, 63);
-        //         ImageMan.Add(Image.Name.Alien_UFO, Texture.Name.Aliens, 122, 491, 96, 45);
-
-        //     // --- Stitch ---
-        //         ImageMan.Add(Image.Name.Stitch, Texture.Name.Stitch, 0, 0, 300, 410);
-
-
-
-        // let RedBirdImage = this.textures.get(Texture.Name.Birds);
-
-        // RedBirdImage.add('redBird', 0, 47, 41, 48, 46);
+        this.pAlien_Crab = SpriteMan.Add(Sprite.Name.Alien_Crab, Image.Name.Alien_Crab, Texture.Name.Aliens, 200, 200, 1, 1);
 
         ImageMan.Add(Image.Name.RedBird, Texture.Name.Birds, 47, 41, 48, 46);
 
         this.pRedBird = SpriteMan.Add(Sprite.Name.RedBird, Image.Name.RedBird, Texture.Name.Birds, 50, 500, 1, 1);
 
-        //this.add.sprite(400, 200, Texture.Name.Birds, Image.Name.RedBird);
+        ImageMan.Add(Image.Name.Alien_Octopus, Texture.Name.Aliens, 554, 26, 104, 70 );
 
-
-        // let SitchImage = this.textures.get(Texture.Name.Stitch);
-
-        // SitchImage.add('stitch', 0, 0, 0, 300, 410);
-
-        //ImageMan.Add(Image.Name.Stitch, Texture.Name.Stitch, 0, 0, 300, 410);
-
-        //this.add.sprite(400, 400, Texture.Name.Stitch, Image.Name.Stitch);
-
-
+        this.pAlien_Octopus = SpriteMan.Add(Sprite.Name.Alien_Octopus, Image.Name.Alien_Octopus,Texture.Name.Aliens,
+             650, 150, 1, 1);
 
 
         console.log("===== Manager Tests End =====");
@@ -119,6 +84,46 @@ export default class Game extends Phaser.Scene {
         }
         this.pRedBird.x += this.redSpeed;
         this.pRedBird.Update();
+
+        //--------------------------------------------------------
+        // Alien - Angles,position
+        //--------------------------------------------------------
+
+        this.AlienAngle += 0.1;
+        this.AlienPosX += 2.0;
+        if (this.AlienPosX > 800.0)
+            this.AlienPosX = 0.0;
+        this.AlienPosY += 1.0;
+        if (this.AlienPosY > 600.0)
+            this.AlienPosY = 0.0;
+
+        this.pAlien_Crab.x = this.AlienPosX;
+        this.pAlien_Crab.y = this.AlienPosY;
+        this.pAlien_Crab.angle = this.AlienAngle;
+
+        this.pAlien_Crab.Update();
+
+
+        // 1. Increment values (using your logic)
+        this.blue += 0.001;
+        this.red -= 0.002;
+
+        if (this.red <= 0.0) {
+            this.red = 1.0;
+        }
+
+        // 2. Wrap values to ensure they stay in the 0.0 - 1.0 range if blue grows too large
+        let b = Math.min(this.blue, 1.0);
+
+        // 3. Convert floats (0-1) to integers (0-255)
+        let rInt = Math.floor(this.red * 255);
+        let bInt = Math.floor(b * 255);
+
+        // 4. Create the Hex color
+        let hexColor = Phaser.Display.Color.GetColor(rInt, 0, bInt);
+
+        // 5. Apply to sprite
+        this.pAlien_Octopus.SwapColor(hexColor)
     }
 }
 

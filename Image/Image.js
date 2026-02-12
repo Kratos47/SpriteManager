@@ -52,7 +52,7 @@ export class Image extends DLink {
     // ------------------------------------------------------------
     // Methods/
     // ------------------------------------------------------------
-    Set(name, pTexture, x, y, width, height) {
+    Set(name, pTexture, x, y, width, height,sourceIndex = 0) {
         // Copy the data over
         this.name = name;
 
@@ -64,7 +64,7 @@ export class Image extends DLink {
 
         //Second Argument sourceIndex	0	The index of the Image Source 
         //to use (usually 0 if the texture only has one image/file).
-        image.add(name, 0, x, y, width, height); //
+        image.add(name, sourceIndex, x, y, width, height); //
     }
 
     // C# "new Clear()"
