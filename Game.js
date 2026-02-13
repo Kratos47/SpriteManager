@@ -138,11 +138,6 @@ export default class Game extends Phaser.Scene {
         }
         this.pStitch.sx += this.pStitch_Speed;
         this.pStitch.Update();
-
-        //   let newScale = 1.5 + Math.sin(time / 500) * 0.5;
-        //   this.pStitch.scaleX = newScale;
-        //   this.pStitch.scaleY = newScale;
-        //   this.pStitch.Update();
     }
 }
 
