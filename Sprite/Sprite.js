@@ -118,8 +118,8 @@ export class Sprite extends DLink {
 
     this.poSprite.x = this.x;
     this.poSprite.y = this.y;
-    this.poSprite.sx = this.sx;
-    this.poSprite.sy = this.sy;
+    this.poSprite.scaleX = this.sx;
+    this.poSprite.scaleY = this.sy;
     this.poSprite.angle = this.angle;
 
     this.poSprite.update();

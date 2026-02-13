@@ -40,6 +40,7 @@ export default class Game extends Phaser.Scene {
 
         this.blue = 0.0;
         this.red = 0.0;
+        this.pStitch_Speed = 0.1;
     }
 
     preload() {
@@ -66,11 +67,13 @@ export default class Game extends Phaser.Scene {
 
         this.pRedBird = SpriteMan.Add(Sprite.Name.RedBird, Image.Name.RedBird, Texture.Name.Birds, 50, 500, 1, 1);
 
-        ImageMan.Add(Image.Name.Alien_Octopus, Texture.Name.Aliens, 554, 26, 104, 70 );
+        ImageMan.Add(Image.Name.Alien_Octopus, Texture.Name.Aliens, 554, 26, 104, 70);
 
-        this.pAlien_Octopus = SpriteMan.Add(Sprite.Name.Alien_Octopus, Image.Name.Alien_Octopus,Texture.Name.Aliens,
-             650, 150, 1, 1);
+        this.pAlien_Octopus = SpriteMan.Add(Sprite.Name.Alien_Octopus, Image.Name.Alien_Octopus, Texture.Name.Aliens,
+            650, 150, 1, 1);
 
+        ImageMan.Add(Image.Name.Stitch, Texture.Name.Stitch, 0, 0, 300, 410);
+        this.pStitch = SpriteMan.Add(Sprite.Name.Stitch, Image.Name.Stitch, Texture.Name.Stitch, 400, 300, 0.5, 0.5);
 
         console.log("===== Manager Tests End =====");
     }
@@ -124,6 +127,22 @@ export default class Game extends Phaser.Scene {
 
         // 5. Apply to sprite
         this.pAlien_Octopus.SwapColor(hexColor)
+
+
+        //--------------------------------------------------------
+        // Stitch
+        //--------------------------------------------------------
+        if (this.pStitch.sx > 2 || this.pStitch.sx < 0.0) {
+            this.pStitch_Speed *= -1.0;
+            this.pStitch.sy *= -1.0;
+        }
+        this.pStitch.sx += this.pStitch_Speed;
+        this.pStitch.Update();
+
+        //   let newScale = 1.5 + Math.sin(time / 500) * 0.5;
+        //   this.pStitch.scaleX = newScale;
+        //   this.pStitch.scaleY = newScale;
+        //   this.pStitch.Update();
     }
 }
 
